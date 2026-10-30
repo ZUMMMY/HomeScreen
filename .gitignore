@@ -1,0 +1,25 @@
+# Your settings: holds your secret calendar links and any API keys
+config.toml
+.env
+*.local.toml
+
+# Generated at runtime: logs, feed copies, recordings, wallpaper pictures, Edge profile
+cache/
+wallpaper/data.js
+*.log
+
+# Your own theme photos
+wallpaper/themes/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Editors and Windows
+.vscode/
+.idea/
+.claude/
+Thumbs.db
+desktop.ini

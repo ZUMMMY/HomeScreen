@@ -1,0 +1,122 @@
+# Madison Desktop settings.
+# Copy this file to config.toml and edit that copy (setup/install.ps1 does the copy for you).
+
+timezone = "America/Chicago"
+
+[location]
+name = "Madison"
+lat = 43.0731
+lon = -89.4012
+
+[display]
+icons_side = "left"           # where your desktop icons sit; cards go on the other side
+days_ahead = 7                # calendar days shown in the week strip
+watch_days_ahead = 21         # how far ahead "Next up" looks for games and sessions
+units = "fahrenheit"          # or "celsius"
+refresh_minutes = 15         # how often to refresh; keep in step with register-tasks.ps1 -Minutes
+
+# ---------------------------------------------------------------------------
+# Google Calendar
+# Google Calendar (web) > Settings > pick a calendar > Integrate calendar >
+# "Secret address in iCal format". Paste it below. It works like a password:
+# keep it in this file only. Add one [[calendars]] block per calendar.
+# ---------------------------------------------------------------------------
+[[calendars]]
+name = "Personal"
+url = ""
+color = "#8ab4f8"
+
+# [[calendars]]
+# name = "Work"
+# url = ""
+# color = "#f6bf26"
+
+# ---------------------------------------------------------------------------
+# Things you watch
+# ---------------------------------------------------------------------------
+[f1]
+enabled = true
+show_practice = true
+
+[[mlb]]
+name = "Brewers"
+short = "MIL"
+team_id = 158
+theme = "brewers"
+
+# ESPN teams. Wisconsin is team 275 in every sport. Add more teams the same
+# way, e.g. Packers: path = "football/nfl", team = "gb".
+[[espn]]
+name = "Badgers"
+sport = "Football"
+short = "UW"
+path = "football/college-football"
+team = "275"
+theme = "badgers"
+importance = 95
+
+[[espn]]
+name = "Badgers"
+sport = "Volleyball"
+short = "UW"
+path = "volleyball/womens-college-volleyball"
+team = "275"
+theme = "badgers"
+importance = 72
+
+[[espn]]
+name = "Badgers"
+sport = "Men's Hockey"
+short = "UW"
+path = "hockey/mens-college-hockey"
+team = "275"
+theme = "badgers"
+importance = 70
+
+[[espn]]
+name = "Badgers"
+sport = "Men's Basketball"
+short = "UW"
+path = "basketball/mens-college-basketball"
+team = "275"
+theme = "badgers"
+importance = 75
+
+[[espn]]
+name = "Badgers"
+sport = "Women's Basketball"
+short = "UW"
+path = "basketball/womens-college-basketball"
+team = "275"
+theme = "badgers"
+importance = 65
+
+# ---------------------------------------------------------------------------
+# Around Madison
+# ---------------------------------------------------------------------------
+[madison]
+# Free key from https://developer.ticketmaster.com (concerts, shows, etc.).
+# Leave blank to skip; your own list in madison_events.toml still shows.
+ticketmaster_key = ""
+radius_miles = 8
+manual_file = "madison_events.toml"
+
+# ---------------------------------------------------------------------------
+# F1 race mode: live timing at http://localhost:8765 while a session is on
+# ---------------------------------------------------------------------------
+[race_mode]
+enabled = true
+auto_start = true             # fetch.py starts live.py shortly before each session
+start_minutes_before = 10     # go live this long before each session starts
+practice = true               # also go live for practice sessions
+port = 8765
+delay_seconds = 0             # hold data back to line up with your TV/stream
+favorite_drivers = ["NOR"]    # three-letter codes, drawn bigger on the map
+f1tv_login = false            # true after running: python -m fastf1 auth f1tv --authenticate
+open_browser = false          # "chrome": new Chrome window on the timing page when a session goes live;
+                              # true: your default browser; false: open it yourself
+
+# Optional: change which event wins the day's theme (higher wins).
+# [priority]
+# f1-race = 100
+# mlb-postseason = 99

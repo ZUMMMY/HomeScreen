@@ -1,0 +1,7 @@
+requests>=2.31
+icalendar>=6.0
+recurring-ical-events>=3.0
+tzdata
+websockets>=14
+# live F1 timing for race mode
+fastf1>=3.9,<4

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Madison Desktop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="backdrop" aria-hidden="true">
+    <div class="bg-image"></div>
+    <div class="bg-pattern"></div>
+    <div class="bg-glow"></div>
+    <div class="watermark"></div>
+  </div>
+
+  <main id="everyday">
+    <section id="hero"></section>
+    <aside id="rail">
+      <header id="clock">
+        <div class="time"></div>
+        <div class="date"></div>
+        <div class="weather-now"></div>
+      </header>
+      <section class="card" id="results"></section>
+      <section class="card" id="today"></section>
+      <section class="card" id="next"></section>
+      <section class="card" id="local"></section>
+      <div id="status-line"></div>
+    </aside>
+    <footer id="week"></footer>
+  </main>
+
+  <main id="race" hidden>
+    <header id="race-bar"></header>
+    <section id="race-map">
+      <svg id="track" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet">
+        <g id="track-lines"></g>
+        <g id="track-corners"></g>
+        <g id="cars"></g>
+      </svg>
+      <div id="pit-box"></div>
+      <div id="map-note"></div>
+    </section>
+    <aside id="tower"></aside>
+    <footer id="rc"></footer>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script src="race.js"></script>
+</body>
+</html>

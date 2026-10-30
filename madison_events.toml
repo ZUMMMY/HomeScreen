@@ -1,0 +1,24 @@
+# Your own Madison happenings, for things with no feed.
+# One [[event]] block each. Use either:
+#   date = "YYYY-MM-DD"                          a one-off
+#   weekly = "Sat", from = "MM-DD", until = "MM-DD"   repeats every week in that range
+# start/end are 24h local times; leave both out for an all-day event.
+# importance: 50 is a normal local event; anything above 60 can take over the day's theme.
+
+# Outdoor season is over for 2026; uncomment (and check dcfm.org dates) next spring.
+# [[event]]
+# title = "Dane County Farmers' Market"
+# weekly = "Sat"
+# from = "04-11"
+# until = "11-14"
+# start = "06:15"
+# end = "13:45"
+# location = "Capitol Square"
+# importance = 45
+
+# [[event]]
+# title = "Concert at the Sylvee"
+# date = "2026-11-20"
+# start = "20:00"
+# location = "The Sylvee"
+# importance = 55
