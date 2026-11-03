@@ -94,6 +94,51 @@ Live sessions are recorded to `cache\recordings\` and can be replayed with `--re
 
 Watching on a delayed stream? Set `delay_seconds` in `config.toml` so the timing doesn't spoil it.
 
+## Calendar suggestions
+
+Every few hours it looks a month ahead for things worth putting on your calendar that aren't
+there yet:
+- **Movies:** the month's most popular wide releases, plus anything matching your `follow` list
+  (titles, franchises, studios, directors or actors).
+- **Big games and races:** F1 races, Badgers football, Brewers playoff games. Games with a TBD
+  kickoff wait until the time is announced.
+- **Big shows in Madison:** these need a Ticketmaster key.
+
+Each 15-minute check shows at most one as a Windows notification with **Add to calendar** and
+**No thanks**, at most `max_per_day` a day, never during quiet hours or while race mode is on.
+It never asks about the same thing twice. Settings are under `[suggestions]` in `config.toml`.
+
+**Setup**
+1. Run `powershell -ExecutionPolicy Bypass -File setup\register-notifications.ps1`. It adds a
+   *Madison Desktop* Start menu shortcut, which Windows needs to pass a notification's button clicks
+   back to the app (opening it refreshes the wallpaper). It's for your user only, and `-Remove`
+   undoes it. Each notification has a small background process waiting for your answer, for up to
+   `answer_hours`. After that, or if you swipe it away, it drops out; `suggest.py --again` brings it back.
+2. Movies: get a free TMDB account, then go to themoviedb.org > Settings > API. Put the
+   *API Read Access Token* in `tmdb_token`, and add what you follow to `follow`.
+3. One-click adding needs Google's Calendar API, because the iCal link is read-only. Without it,
+   **Add to calendar** opens Google Calendar's new-event page already filled in, and you click Save.
+   1. At console.cloud.google.com, create a project and enable the **Google Calendar API**.
+   2. Under *Google Auth Platform*, set it up as **External**, then under *Audience* click
+      **Publish app**. In Testing mode Google signs you out every 7 days.
+   3. Under *Clients*, create a **Desktop app** client, download its JSON and save it in this folder
+      as `google-oauth-client.json`.
+   4. Run `.venv\Scripts\python suggest.py --google-login` and sign in. Google will say it hasn't
+      verified the app; that's expected for your own project (*Advanced > Go to ...*).
+
+   The client file and your sign-in (`cache\google-token.json`) stay out of git. The app can only
+   add and edit calendar events.
+
+To try it now:
+
+```
+.venv\Scripts\python suggest.py --list    # what it would suggest, and what's already on your calendar
+.venv\Scripts\python suggest.py --test    # show the next one as a notification now
+.venv\Scripts\python suggest.py --again   # re-ask the ones you didn't answer
+```
+
+Movie data comes from TMDB. This product uses the TMDB API but is not endorsed or certified by TMDB.
+
 ## Keeping it light
 
 Measured on this PC:
@@ -114,6 +159,8 @@ powershell -ExecutionPolicy Bypass -File setup\perf-check.ps1 -Minutes 3
 
 - `fetch.py` refreshes `wallpaper/data.js`. Use `--summary` to see what it found.
 - `live.py` is race mode: it serves the timing page and streams the data to it.
+- `suggest.py` handles calendar suggestions: the notification buttons, the Google sign-in and `--list` / `--test`.
+- `desktop/suggest/` finds the suggestions (TMDB movies, big games and shows), shows the notifications and adds the events to Google Calendar.
 - `desktop/render.py` draws the wallpaper pictures with Edge and sets them per monitor (`--restore` puts your old wallpaper back).
 - `desktop/sources/` holds one module per feed: Google Calendar, Jolpica (F1 schedule), MLB Stats API,
   ESPN, Ticketmaster plus your own list, and Open-Meteo weather.

@@ -3,6 +3,7 @@
 Task Scheduler runs this when you sign in and every 15 minutes (see setup/register-tasks.ps1).
 Each run also looks at the F1 schedule: if a session goes live before the next run, race mode
 (live.py) is booked in Task Scheduler for that exact minute; if one is already on, it starts now.
+It also looks a month ahead for calendar suggestions (see suggest.py).
 
     python fetch.py            refresh once
     python fetch.py --summary  refresh and print what the wallpaper will show
@@ -17,7 +18,7 @@ import sys
 from datetime import timedelta
 from pathlib import Path
 
-from desktop import render, themes
+from desktop import render, suggest, themes
 from desktop.common import (CACHE, ROOT, WALLPAPER, load_config, local_tz, now_utc,
                             parse_time, read_json, setup_logging, to_iso,
                             write_json, write_text_atomic)
@@ -35,6 +36,7 @@ def main() -> None:
     parser.add_argument("--summary", action="store_true", help="print what the wallpaper will show")
     parser.add_argument("--no-race", action="store_true", help="don't start race mode")
     parser.add_argument("--no-render", action="store_true", help="don't redraw the desktop picture")
+    parser.add_argument("--no-suggest", action="store_true", help="don't look for calendar suggestions")
     args = parser.parse_args()
 
     setup_logging("fetch")
@@ -86,6 +88,11 @@ def main() -> None:
         _maybe_start_race_mode(cfg, events, now)
     if not args.no_render:
         render.update()
+    if not args.no_suggest and cfg.get("suggestions", {}).get("enabled", False):
+        try:
+            suggest.run(cfg, now)
+        except Exception:  # suggestions are extra; never let them break the refresh
+            log.exception("Suggestions failed")
     if args.summary:
         _print_summary(cfg, payload)
 

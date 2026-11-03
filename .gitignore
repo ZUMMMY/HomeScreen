@@ -23,3 +23,7 @@ __pycache__/
 .claude/
 Thumbs.db
 desktop.ini
+
+# Google sign-in for adding suggestions to your calendar
+google-oauth-client.json
+client_secret*.json

@@ -20,6 +20,9 @@ def fetch(cfg: dict, now: datetime) -> list[dict]:
     start = datetime.combine(now.astimezone(tz).date(), time.min, tz) - timedelta(days=1)
     end = start + timedelta(days=days + 2)
 
+    # games and races you added from a suggestion are already on the wallpaper from their own feed
+    shown_elsewhere = {i["uid"] for i in (read_json(CACHE / "suggestions.json", {}) or {}).get("items", {}).values()
+                       if i.get("uid") and i["kind"] != "movie"}
     events = []
     failed.clear()
     for cal in cfg.get("calendars", []):
@@ -29,7 +32,8 @@ def fetch(cfg: dict, now: datetime) -> list[dict]:
         name = cal.get("name", "calendar")
         cache = CACHE / f"calendar-{hashlib.sha1(url.encode()).hexdigest()[:10]}.json"
         try:
-            got = [_to_event(c, cal, tz) for c in _components(url, start, end)]
+            got = [_to_event(c, cal, tz) for c in _components(url, start, end)
+                   if str(c.get("UID", "")) not in shown_elsewhere]
             write_json(cache, got)
         except Exception as exc:  # one bad link shouldn't hide the other calendars
             log.error("Calendar %r: %s", name, exc)

@@ -5,3 +5,8 @@ tzdata
 websockets>=14
 # live F1 timing for race mode
 fastf1>=3.9,<4
+# Windows notifications with buttons (calendar suggestions)
+winrt-runtime>=3
+winrt-Windows.UI.Notifications>=3
+winrt-Windows.Data.Xml.Dom>=3
+winrt-Windows.Foundation>=3

@@ -120,3 +120,19 @@ open_browser = false          # "chrome": new Chrome window on the timing page w
 # [priority]
 # f1-race = 100
 # mlb-postseason = 99
+
+[suggestions]
+# Notable things in the next month that aren't on your calendar yet, offered as Windows
+# notifications with "Add to calendar" / "No thanks". Needs setup\register-notifications.ps1.
+enabled = false
+days_ahead = 30
+calendar_id = "primary"        # the Google Calendar accepted events go on ("primary" is your main one)
+min_importance = 92            # games and races: F1 race 100, MLB playoffs 96+, Badgers football 95
+show_min_importance = 55       # Madison shows: big venues 58 (needs a ticketmaster_key above)
+max_per_day = 4                # at most one per 15-minute check, and never more than this a day
+quiet_hours = [22, 8]          # no notifications from 10 PM to 8 AM
+answer_hours = 12              # how long a notification waits for your answer
+# Movies from TMDB: free "API Read Access Token" at themoviedb.org > Settings > API.
+tmdb_token = ""
+big_releases = 4               # the most popular wide releases opening in the next month
+follow = ["Dune", "Marvel", "Pixar", "Christopher Nolan"]   # titles, franchises, studios, directors or actors
